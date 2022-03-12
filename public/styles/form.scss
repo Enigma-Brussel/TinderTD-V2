@@ -1,0 +1,44 @@
+body{
+  color: white;
+}
+
+.container{
+  background-repeat: no-repeat;
+  background: linear-gradient(262deg, #ff7854, #fd267d);
+  position: relative;
+}
+
+form{
+
+  margin: 50px 0px;
+
+  input, textarea, select{
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    border: 0px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  textarea{
+    resize: vertical;
+    max-height: 100px;
+  }
+
+  label{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .form-page{
+    display: none;
+  }
+
+  .status{
+    font-weight: 800;
+  }
+
+}

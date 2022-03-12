@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tinder TD</title>
+
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/form.css">
+
+</head>
+<body>
+  
+  <div class="container">
+    <div class="save-zone">
+
+      <div class="collumn">
+        <h1>Registreer</h1>
+        <p>Maak hier uw profiel aan.</p>
+      </div>
+
+      <span id="status" class="status"></span>
+
+      <form enctype="multipart/form-data">
+
+        <!-- Pagina 1 -->
+        <div class="form-page" id="page-1">
+
+          <div class="collumn">
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+  
+            <label for="password">Wachtwoord</label>
+            <input type="password" name="password" id="password" required>
+  
+            <label for="repeat_password">Herhaal wachtwoord</label>
+            <input type="password" name="repeat_password" id="repeat_password" required>        
+  
+          </div>
+
+          <div class="bottom-bar row align-center space-between">
+            <a href="/login">Aanmelden</a>
+            <span class="button next">Volgende</span>
+          </div>
+
+        </div>
+
+        <!-- Pagina 2 -->
+        <div class="form-page" id="page-2">
+
+          <div class="collumn">
+
+            <label for="name">(enkel) Voornaam</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="age">Leeftijd</label>
+            <input type="number" name="age" id="age" min="18" max="99" required>
+
+            <label for="job">Job/Studies</label>
+            <input type="text" name="job" id="job" required>
+
+            <label for="association">Kring</label>
+            <select name="association" id="association" required>
+
+              <option value=""></option>
+
+              <option value="Niet gedoopt">Niet gedoopt</option>
+              
+              <option value="Enigma">Enigma</option>
+              <option value="Manu Juvanta">Manu Juvanta</option>
+              <option value="Commin@">Commin@</option>
+              <option value="Normalia">Normalia</option>
+              <option value="Vilvordia">Vilvordia</option>
+              <option value="Omega">Omega</option>
+              <option value="POPO">POPO</option>
+
+              <option value="Andere">Andere (vermeld in bio)</option>
+
+            </select>
+
+            <label for="bio">Bio</label>
+            <textarea name="bio" id="bio" required></textarea>
+
+          </div>
+
+          <div class="bottom-bar row space-between">
+            <span class="button back">Terug</span>
+            <span class="button next">Volgende</span>
+          </div>
+
+        </div>
+
+        <!-- Pagina 3 -->
+        <div class="form-page" id="page-3">
+
+          <div class="collumn">
+
+            <label for="profilepicture">Profielfoto</label>
+            <input type="file" name="profilepicture" id="profilepicture" required>
+
+          </div>
+
+          <div class="bottom-bar row space-between">
+            <span class="button back">Terug</span>
+            <span class="button" id="register">Registreer</span>
+          </div>
+
+        </div>
+
+        <!-- Complete page -->
+
+        <div class="form-page" id="page-complete">
+
+          <div class="row align-center center">
+            <h1>Ready to mingle!</h1>
+            <span class="button">Aanmelden</span>
+          </div>
+
+        </div>
+
+        
+      </form>
+
+    </div>
+  </div>
+
+  <script src="script/main.js"></script>
+  <script src="script/register.js"></script>
+  
+
+</body>
+</html>

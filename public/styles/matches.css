@@ -1,0 +1,41 @@
+.profile {
+  text-decoration: none;
+  text-align: center;
+  margin: 0px 20px 0px 0px;
+}
+
+.profile img {
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  display: block;
+  margin: 0px auto;
+}
+
+.profile .profile-name {
+  display: block;
+  color: #b2bec3;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.chat {
+  text-decoration: none;
+  margin: 0px 0px 10px 0px;
+  padding: 10px 0px;
+}
+
+.chat .profile-name {
+  color: black;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.chat .chat-message {
+  display: block;
+  color: #b2bec3;
+  font-size: 12px;
+  margin-top: -7px;
+}
+/*# sourceMappingURL=matches.css.map */

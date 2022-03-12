@@ -1,0 +1,44 @@
+.chat-container{
+
+  max-height: 60vh;
+  overflow-y: scroll;
+  
+  .chat{
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin: 0px 0px 10px 0px;
+  }
+
+  .chat-gray{
+    background-color: #dfe6e9;
+  }
+
+  .chat-color{
+    background-color: #fd267d;
+    color: white;
+  }
+
+}
+
+.chat-textbox-container{
+  position: fixed;
+  bottom: 30px;
+  left: 15px;
+  right: 15px;
+
+  textarea, button{
+    padding: 10px;
+    border: 0px;
+  }
+
+  textarea{
+    border-radius: 10px 0px 0px 10px;
+  }
+
+  button{
+    border-radius: 0px 10px 10px 0px;
+    background-color: #fd267d;
+    color: white;
+  }
+
+}
