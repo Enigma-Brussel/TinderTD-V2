@@ -7,3 +7,5 @@ app/src/public/img/users/*.jpeg
 .env
 
 database/data/*
+
+nginx/certbot/*
