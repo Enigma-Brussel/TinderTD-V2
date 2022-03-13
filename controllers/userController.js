@@ -1,5 +1,4 @@
 const { UserDB } = require('../CRUD/userDB.js');
-const cookieParser = require('../services/cookieParser');
 
 let userDB = new UserDB;
 

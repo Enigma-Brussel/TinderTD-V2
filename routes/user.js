@@ -83,7 +83,11 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  
+  console.log('GET', '/api/user/logout', req.body);
+  req.session.loggedin = false;
+  req.session.user = null;
+  res.status(200);
+  res.redirect('/login');
 });
 
 module.exports = router;
