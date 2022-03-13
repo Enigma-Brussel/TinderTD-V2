@@ -1,6 +1,9 @@
-node_modules/
-build/Release
-.npm
+app/node_modules/
+
+app/src/public/img/users/*.png
+app/src/public/img/users/*.jpg
+app/src/public/img/users/*.jpeg
+
 .env
 
-database/*
+database/data/*
