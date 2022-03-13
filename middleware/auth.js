@@ -7,6 +7,7 @@ module.exports = async (req, res, next) => {
     const cookieValue = cookieParser.getUserCookie(req);
 
     console.log('SESSION', req.session);
+    console.log('COOKIE', cookieValue);
 
     if(req.session.loggedin && req.session.user && cookieValue){
 
