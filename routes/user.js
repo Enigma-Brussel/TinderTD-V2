@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const multer = require('multer');
-const path = require('path');
 
-const cookieParser = require('../services/cookieParser.js');
 const UserController = require('../controllers/userController');
 
 
@@ -71,7 +69,6 @@ router.post('/login', (req, res) => {
   console.log('POST', '/api/user/login', req.body);
   UserController.login(req.body.email, req.body.password).then((value) => {
     if(value){
-      cookieParser.createUserCookie(res, value.id);
       req.session.user = value;
       req.session.loggedin = true;
     }
@@ -83,6 +80,10 @@ router.post('/login', (req, res) => {
       error: 'Unknown Error'
     });
   });
+});
+
+router.get('/logout', (req, res) => {
+  
 });
 
 module.exports = router;
