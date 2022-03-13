@@ -22,9 +22,15 @@ class UserDB {
         return new Promise((resolve, reject) => {
             this.getVerbinding().voerSqlQueryUit("SELECT * FROM user").then((resultaat) => {
                 let resultatenArray = [];
-                resultaat.map((value) => {
-                    resultatenArray.push(this.converteerQueryNaarObject(value));
-                });
+                if(!Array.isArray(resultaat)){
+                    resultatenArray.push(this.converteerQueryNaarObject(resultaat))
+                }else{
+                    resultaat.map((value) => {
+                        resultatenArray.push(this.converteerQueryNaarObject(value));
+                    });
+                }
+
+                
                 resolve(resultatenArray);
             }).catch((error) => reject(error));
         });
