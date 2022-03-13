@@ -6,9 +6,9 @@ module.exports = async (req, res, next) => {
 
     const cookieValue = cookieParser.getUserCookie(req);
 
-    if(req.session.loggedin && req.session.user && cookieValue){
+    console.log('SESSION', req.session);
 
-      console.log('SESSION', req.session);
+    if(req.session.loggedin && req.session.user && cookieValue){
 
       if(cookieValue == req.session.user.id){
         userController.getUser(cookieValue).then((user) => {
