@@ -7,7 +7,7 @@ class cookieParser {
   static createUserCookie(res, value){
     console.log('setting up cookie');
     let setCookie = cookie.serialize(cookieName, value, {
-      path: '/',
+      path: '*',
       secure: true
     });
     res.setHeader('Set-Cookie', setCookie);
