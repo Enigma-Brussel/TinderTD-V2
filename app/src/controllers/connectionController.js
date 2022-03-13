@@ -36,13 +36,11 @@ class connectionController {
                     if(connection.matchType == 'like' || connection.matchType == 'superlike'){
                       // MATCH (like)
                       connectionDB.editConnection(connection.id, 'like', true).then((value) => {
-                        console.log('MATCH', value);
                         resolve({status: 'match', type: 'like', complete: true});
                       }).catch((error) => reject(error));
                     }else{
                       // dislike match
                       connectionDB.editConnection(connection.id, 'dislike', true).then((value) => {
-                        console.log('MATCH', value);
                         resolve({status: 'nomatch', type: 'dislike', complete: true});
                       }).catch((error) => reject(error));
                     }
@@ -50,7 +48,6 @@ class connectionController {
                   case 'dislike':
                     // dislike match
                     connectionDB.editConnection(connection.id, 'dislike', true).then((value) => {
-                      console.log('MATCH', value);
                       resolve({status: 'nomatch', type: 'dislike', complete: true});
                     }).catch((error) => reject(error));
                     break;
@@ -63,20 +60,17 @@ class connectionController {
                       if(connection.matchType == 'superlike'){
                         // MATCH (superlike)
                         connectionDB.editConnection(connection.id, 'superlike', true).then((value) => {
-                          console.log('MATCH', value);
                           resolve({status: 'match', type: 'superlike', complete: true});
                         }).catch((error) => reject(error));
                         // bonus?
                       }else if(connection.matchType == 'like'){
                         // MATCH (like)
                         connectionDB.editConnection(connection.id, 'like', true).then((value) => {
-                          console.log('MATCH', value);
                           resolve({status: 'match', type: 'like', complete: true});
                         }).catch((error) => reject(error));
                       }else{
                         // dislike match
                         connectionDB.editConnection(connection.id, 'dislike', true).then((value) => {
-                          console.log('MATCH', value);
                           resolve({status: 'nomatch', type: 'dislike', complete: true});
                         }).catch((error) => reject(error));
                       }
@@ -104,7 +98,6 @@ class connectionController {
             UserController.removeSuperLike(userOne).then((value) => {
 
               connectionDB.createConnection(userOne, userTwo, matchType, false).then((value) => {
-                console.log('NEW MATCH', value);
                 resolve({status: 'nomatch', type: matchType, complete: false});
               }).catch((error) => reject(error));
 
@@ -113,7 +106,6 @@ class connectionController {
           }else{
 
             connectionDB.createConnection(userOne, userTwo, matchType, false).then((value) => {
-              console.log('NEW MATCH', value);
               resolve({status: 'nomatch', type: matchType, complete: false});
             }).catch((error) => reject(error));
 
