@@ -137,10 +137,32 @@ router.post('/checkmail', (req, res) => {
 });
 
 router.get('/userdata', (req, res) => {
-  console.log('POST', '/api/user/userdata', req.body);
-
+  console.log('GET', '/api/user/userdata', req.body);
   res.status = 200;
-  res.json(req.sesion.user);
+  res.json(req.session.user);
+});
+
+router.post('/change', (req, res) => {
+  console.log('POST', '/api/user/change', req.body)
+
+  if(req.body.name && req.body.age && req.body.job && req.body.association && req.body.bio){
+    UserController.editProfile(req.session.user.id, {
+      name: req.body.name,
+      age: req.body.age,
+      job: req.body.job,
+      association: req.body.association,
+      bio: req.body.bio,
+    }).then((value) => {
+      res.status = 200;
+      res.json(value);
+    }).catch((error) => {
+      res.status = 500;
+      res.json({error: error});
+    });
+  }else{
+    res.status = 500;
+    res.json({error: 'Missing data'});
+  }
 
 });
 
