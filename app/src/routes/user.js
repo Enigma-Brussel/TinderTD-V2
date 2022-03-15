@@ -33,12 +33,15 @@ let upload = multer({
 // login/register/logout
 
 router.post('/register', upload.single('profilepicture'), (req, res) => {
-  console.log('POST', '/api/user/register', req.body);
+
+  let password = req.body.password
+
+  LogController.log('POST', '/api/user/register', req.body);
 
   // foto word door middleware al upgeload -> req.file is een extra zekerheid dat het gelukt is
   if(req.file){
 
-    UserController.register(req.body.email, req.body.password, req.body.name, req.file.filename, req.body.age, req.body.job, req.body.association, req.body.bio).then((value) => {
+    UserController.register(req.body.email, password, req.body.name, req.file.filename, req.body.age, req.body.job, req.body.association, req.body.bio).then((value) => {
       if(value){
         // succes
         if(automaticLogin){
@@ -75,8 +78,12 @@ router.post('/register', upload.single('profilepicture'), (req, res) => {
 });
 
 router.post('/login', (req, res) => {
+
+  let password = req.body.password;
+
   LogController.log('POST', '/api/user/login', req.body);
-  UserController.login(req.body.email, req.body.password).then((value) => {
+
+  UserController.login(req.body.email, password).then((value) => {
     if(value){
       req.session.user = value;
       req.session.loggedin = true;

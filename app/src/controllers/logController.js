@@ -9,7 +9,7 @@ class LogController {
   static log(...args){
     let newArgs = args;
 
-    args.map((argument, index) => {
+    newArgs.map((argument, index) => {
 
       switch(typeof(argument)){
         case 'object':
