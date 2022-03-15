@@ -39,8 +39,12 @@ class UserDB {
     getUserFromEmail(email) {
         return new Promise((resolve, reject) => {
             this.getVerbinding().voerSqlQueryUit("SELECT * FROM user WHERE email = ?", [email]).then((resultaat) => {
-                resultaat = this.converteerQueryNaarObject(resultaat)
-                resolve(resultaat);
+                if((Array.isArray(resultaat) && resultaat.length == 0)){
+                    resolve(false);
+                }else{
+                    resultaat = this.converteerQueryNaarObject(resultaat)
+                    resolve(resultaat);
+                }
             }).catch((error) => reject(error));
         });
     }

@@ -1,11 +1,14 @@
 // form pagina
 let currentPage = 0;
 
-function loadPage(page){
+async function loadPage(page){
 
   $('#status').innerHTML = "";
 
-  if(check(page)){
+  if(await check(page)){
+
+    console.log('CHECKED');
+
     document.querySelectorAll('.form-page').forEach((item) => {
       item.style.display = "none";
     });
@@ -31,7 +34,7 @@ document.querySelectorAll('.back').forEach((item) => {
 loadPage(1);
 
 
-function check(page){
+async function check(page){
   switch(page - 1){
     case 1:
 
@@ -41,7 +44,17 @@ function check(page){
 
       if(email && password && repeat_password){
         if(password == repeat_password){
-          return true;
+
+          // check als de email al in gebruik is
+          const response = await sendData('/api/user/checkmail', 'POST', {email: email});
+
+          if(await response.emailExist == true){
+            $('#status').innerHTML = "Email al in gebruik";
+            return false;
+          }else{
+            return true;
+          }
+          
         }else{
           $('#status').innerHTML = "Wachtwoorden komen niet overeen";
           return false;

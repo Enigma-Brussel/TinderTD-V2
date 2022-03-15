@@ -28,7 +28,7 @@ let upload = multer({
   fileFilter: fileFilter
 })
 
-// login/register
+// login/register/logout
 
 router.post('/register', upload.single('profilepicture'), (req, res) => {
   console.log('POST', '/api/user/register', req.body);
@@ -52,7 +52,7 @@ router.post('/register', upload.single('profilepicture'), (req, res) => {
     }).catch((error) => {
       res.statusCode = 500;
       res.json({
-        error: `Unknown Error (DB 2): ${error}`
+        error: `Error: ${error}`
       });
     });
 
@@ -88,6 +88,36 @@ router.get('/logout', (req, res) => {
   req.session.user = null;
   res.status(200);
   res.redirect('/login');
+});
+
+// andere
+
+// check als de mail al in gebruik is
+router.post('/checkmail', (req, res) => {
+  console.log('POST', '/api/user/checkmail', req.body);
+
+  UserController.getUserByEmail(req.body.email).then((user) => {
+
+    if(user){
+      // gebruiker bestaat als
+      res.statusCode = 200;
+      res.json({
+        emailExist: true
+      });
+    }else{
+      // gebruiker bestaat niet
+      res.statusCode = 200 ;
+      res.json({
+        emailExist: false
+      });
+    }
+  }).catch((error) => {
+    res.statusCode = 500;
+      res.json({
+        error: error
+      });
+  });
+
 });
 
 module.exports = router;
