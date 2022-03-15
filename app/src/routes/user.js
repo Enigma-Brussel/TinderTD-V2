@@ -3,6 +3,7 @@ const multer = require('multer');
 
 const UserController = require('../controllers/userController');
 
+const automaticLogin = true;
 
 // multer
 
@@ -38,11 +39,18 @@ router.post('/register', upload.single('profilepicture'), (req, res) => {
 
     UserController.register(req.body.email, req.body.password, req.body.name, req.file.filename, req.body.age, req.body.job, req.body.association, req.body.bio).then((value) => {
       if(value){
-
         // succes
-        res.statusCode = 200;
-        res.json(value);
-        
+        if(automaticLogin){
+          UserController.login(email, password).then((value) => {
+            req.session.user = value;
+            req.session.loggedin = true;
+            res.statusCode = 200;
+            res.json(value);
+          });
+        }else{
+          res.statusCode = 200;
+          res.json(value);
+        }
       }else{
         res.statusCode = 500;
         res.json({

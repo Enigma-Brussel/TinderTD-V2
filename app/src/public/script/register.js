@@ -7,8 +7,6 @@ async function loadPage(page){
 
   if(await check(page)){
 
-    console.log('CHECKED');
-
     document.querySelectorAll('.form-page').forEach((item) => {
       item.style.display = "none";
     });
@@ -31,7 +29,7 @@ document.querySelectorAll('.back').forEach((item) => {
   });
 });
 
-loadPage(1);
+loadPage(1); // 1
 
 
 async function check(page){
@@ -120,8 +118,6 @@ $('#register').addEventListener('click', async (e) => {
 
       const response = await sendData('/api/user/register', 'POST', formData, false);
 
-      console.log('Response:', response);
-
       if(response){
         $('#status').innerHTML = "";
         
@@ -130,6 +126,7 @@ $('#register').addEventListener('click', async (e) => {
         });
       
         $(`#page-complete`).style.display = "block";
+        $(`#top-bar`).style.display = "none";
 
       }else{
         $('#status').innerHTML = "Er is iets misgelopen.";
