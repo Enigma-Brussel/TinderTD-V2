@@ -2,6 +2,7 @@ const router = require('express').Router();
 const multer = require('multer');
 
 const UserController = require('../controllers/userController');
+const LogController = require('../controllers/logController');
 
 const automaticLogin = true;
 
@@ -74,7 +75,7 @@ router.post('/register', upload.single('profilepicture'), (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  console.log('POST', '/api/user/login', req.body);
+  LogController.log('POST', '/api/user/login', req.body);
   UserController.login(req.body.email, req.body.password).then((value) => {
     if(value){
       req.session.user = value;
@@ -125,6 +126,14 @@ router.post('/checkmail', (req, res) => {
         error: error
       });
   });
+
+});
+
+router.get('/userdata', (req, res) => {
+  console.log('POST', '/api/user/userdata', req.body);
+
+  res.status = 200;
+  res.json(req.sesion.user);
 
 });
 
