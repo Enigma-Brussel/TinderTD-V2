@@ -169,6 +169,52 @@ class connectionController {
     });
   }
 
+  static getCompletedMatches(id){
+    let targetUser = 0;
+
+    let targetUserArray = [];
+    let matchesArray = [];
+
+    let promiseStack = [];
+
+    return new Promise((resolve, reject) => {
+      connectionDB.getAllCompletedMatchesByUserID(id).then(async (matches) => {
+
+        await matches.map((match) => {
+          if(match.userOne == id){
+            targetUser = match.userTwo;
+          }else{
+            targetUser = match.userOne;
+          }
+          promiseStack.push(UserController.getUser(targetUser));
+        });
+
+        await Promise.all(promiseStack).then((users) => {
+          users.map((user) => {
+            targetUserArray.push(user);
+          });
+        }).catch((error) => reject(error));
+
+        // converteer connections om personlijke data te verwijderen
+
+        matches.map((match, index) => {
+          matchesArray.push({
+            id: match.id,
+            user: {
+              id: targetUserArray[index].id,
+              name: targetUserArray[index].name,
+              picture: targetUserArray[index].picture
+            },
+            matchType: match.matchType,
+            matchComplete: match.matchComplete
+          });
+        });
+
+        await resolve(matchesArray);
+      }).catch((error) => reject(error));
+    });
+  }
+
   /**
    * Krijg potentieele matches
    * @param {number} id ingelogde userID 

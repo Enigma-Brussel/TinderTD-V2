@@ -13,7 +13,7 @@ router.get('/allmatches', (req, res) => {
 
   let userId = req.session.user.id;
 
-  ConnectionController.getCompletedConnections(userId).then((matches) => {
+  ConnectionController.getCompletedMatches(userId).then((matches) => {
     res.status(200);
     res.json(matches);
   }).catch((error) => {

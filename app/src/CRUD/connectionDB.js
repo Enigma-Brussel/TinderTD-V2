@@ -15,10 +15,30 @@ class ConnectionDB {
   }
 
   /**
-   * Krijg alle complete matches van de gebruiker
+   * Krijg alle complete connections van de gebruiker
    * @param {number} id Gebruiker id
    */
   getAllCompletedConnectionsByUserID(id){
+    return new Promise((resolve, reject) => {
+      this.getVerbinding().voerSqlQueryUit("SELECT * FROM connection WHERE (user_one = ? OR user_two = ?) AND match_complete = 1", [id, id]).then((matches) => {
+        let matchesArray = [];
+        if(!Array.isArray(matches)){
+          matchesArray.push(this.converteerQueryNaarObject(matches));
+        }else{
+          matches.map((match) => {
+            matchesArray.push(this.converteerQueryNaarObject(match));
+          });
+        }
+        resolve(matchesArray);
+      }).catch((error) => reject(error));
+    });
+  }
+
+  /**
+   * Krijg alle complete matches van de gebruiker
+   * @param {number} id Gebruiker id
+   */
+  getAllCompletedMatchesByUserID(id){
     return new Promise((resolve, reject) => {
       this.getVerbinding().voerSqlQueryUit("SELECT * FROM connection WHERE (user_one = ? OR user_two = ?) AND (match_type = 'like' OR match_type = 'superlike')  AND match_complete = 1", [id, id]).then((matches) => {
         let matchesArray = [];

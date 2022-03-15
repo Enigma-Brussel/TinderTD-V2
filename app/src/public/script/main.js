@@ -1,4 +1,4 @@
-const serverUrl = "https://tinder.enigmabrussel.be/";
+const serverUrl =  "https://tinder.enigmabrussel.be/";
 let setting = {};
 
 function $(x) {
