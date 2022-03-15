@@ -10,6 +10,8 @@
   border-radius: 50%;
   display: block;
   margin: 0px auto;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .profile .profile-name {
