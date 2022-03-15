@@ -1,4 +1,4 @@
-const serverUrl = "http://localhost:8000";
+const serverUrl = "https://tinder.enigmabrussel.be/";
 let setting = {};
 
 function $(x) {
