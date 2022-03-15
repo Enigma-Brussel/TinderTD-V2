@@ -25,13 +25,32 @@ function renderMatches(){
     let matchesContent = '';
 
     matches.map((match) => {
+
+      let extraCSS = '';
+      let badge = '';
+
+      if(match.matchType == 'superlike'){
+        extraCSS = 'superlike';
+        badge = `<span class="superlike-badge">Superlike</span>`;
+      }
+
+      // match.user.picture
+      // match.user.name
+
       matchesContent += `
-        <a class="chat" href="#">
+        <a class="profile" href="/chat?connection=${match.id}">
           <div class="row align-center">
-            <div class="profile"><img src="/img/users/${match.user.picture}" alt="[Profile]"></div>
+            <div class="picture-container ${extraCSS}">
+              <img src="/img/users/${match.user.picture}"/>
+            </div>
+
             <div>
-              <span class="profile-name">${match.user.name}</span>
-              <span class="chat-message">Lorem ipsum</span>
+              <span class="name">${match.user.name}${badge}</span>
+              <span class="chat">Lorem ipsum</span>
+            </div>
+
+            <div>
+              <!-- Notification -->
             </div>
           </div>
         </a>
