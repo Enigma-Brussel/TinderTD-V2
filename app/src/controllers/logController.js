@@ -1,7 +1,6 @@
+// gevoelige data velden
+sensDatas = ['password', 'repeat_password'];
 class LogController {
-
-  // gevoelige data velden
-  sensDatas = ['password', 'repeat_password'];
 
   /**
    * verwijderd gevoelige info uit de logs
@@ -13,7 +12,7 @@ class LogController {
     args.map((argument, index) => {
 
       switch(typeof(argument)){
-        case Object:
+        case 'object':
 
           sensDatas.map((sensData) => {
             if(argument.hasOwnProperty(sensData)){
@@ -22,7 +21,7 @@ class LogController {
           });
 
           break;
-        case Array:
+        case 'array':
 
           argument.map((argumentItem, index) => {
             sensDatas.map((sensData) => {
@@ -40,7 +39,7 @@ class LogController {
 
     });
 
-    console.log(newArgs);
+    console.log(...newArgs);
 
   }
 
