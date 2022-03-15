@@ -44,38 +44,6 @@ class LogController {
 
   }
 
-
-  // static log(...args){
-
-  //   let newArgs = args;
-
-  //   args.map((value, index) => {
-
-  //   });
-
-  //   let newData = data;
-
-  //   if(typeof(data) == Array){
-  //     newData.map((value, index) => {
-  //       if(typeof(value) == Object){
-  //         if(value.hasOwnProperty("password")){
-  //           newData[index].password = "";
-  //         }
-  //         if(value.hasOwnProperty("repeat_password")){
-  //           newData[index].repeat_password = "";
-  //         }
-  //       }
-  //     });
-  //   }else if(typeof(data) == Object){
-  //     if(data.hasOwnProperty("password")){
-  //       newData.password = "";
-  //     }
-  //     if(data.hasOwnProperty("repeat_password")){
-  //       newData.repeat_password = "";
-  //     }
-  //   }
-
-  //   console.log(type, newData);
-  // }
-
 }
+
+module.exports = LogController;
