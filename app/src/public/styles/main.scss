@@ -66,17 +66,40 @@ a{
   }
 }
 
+
 .save-zone{
   top: 15px;
   bottom: 30px;
   left: 15px;
   right: 15px;
   position: absolute;
-  // overflow: hidden;
+
+
+  display: flex;
+  flex-flow: column;
+
 
   @if $DEV {
     // background-color: rgba(0,255,0,0.2);
   }
+}
+
+.top-bar{
+
+}
+
+.content{
+  flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.bottom-bar{
+  width: 100%;
+  height: auto;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 }
 
 
@@ -184,12 +207,4 @@ a{
 hr{
   border: 0.5px solid #b2bec3;
   margin: 20px 0px;
-}
-
-.bottom-bar{
-  width: 100%;
-  height: auto;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
 }

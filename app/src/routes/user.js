@@ -34,46 +34,55 @@ let upload = multer({
 
 router.post('/register', upload.single('profilepicture'), (req, res) => {
 
-  let password = req.body.password
+  if(req.body.email && req.body.password && req.body.name && req.file.filename && req.body.age && req.body.job && req.body.association && req.body.bio){
+    let password = req.body.password
 
-  LogController.log('POST', '/api/user/register', req.body);
+    // LogController.log('POST', '/api/user/register', req.body);
+    console.log('POST', '/api/user/register');
 
-  // foto word door middleware al upgeload -> req.file is een extra zekerheid dat het gelukt is
-  if(req.file){
+    // foto word door middleware al upgeload -> req.file is een extra zekerheid dat het gelukt is
+    if(req.file){
 
-    UserController.register(req.body.email, password, req.body.name, req.file.filename, req.body.age, req.body.job, req.body.association, req.body.bio).then((value) => {
-      if(value){
-        // succes
-        if(automaticLogin){
-          UserController.login(email, password).then((value) => {
-            req.session.user = value;
-            req.session.loggedin = true;
+      UserController.register(req.body.email, password, req.body.name, req.file.filename, req.body.age, req.body.job, req.body.association, req.body.bio).then((value) => {
+        if(value){
+          // succes
+          if(automaticLogin){
+            UserController.login(email, password).then((value) => {
+              req.session.user = value;
+              req.session.loggedin = true;
+              res.statusCode = 200;
+              res.json(value);
+            });
+          }else{
             res.statusCode = 200;
             res.json(value);
-          });
+          }
         }else{
-          res.statusCode = 200;
-          res.json(value);
+          res.statusCode = 500;
+          res.json({
+            error: 'Unknown Error (DB 1)'
+          });
         }
-      }else{
+      }).catch((error) => {
         res.statusCode = 500;
         res.json({
-          error: 'Unknown Error (DB 1)'
+          error: `Error: ${error}`
         });
-      }
-    }).catch((error) => {
+      });
+
+    }else{
       res.statusCode = 500;
       res.json({
-        error: `Error: ${error}`
+        error: 'Error: no picture'
       });
-    });
-
+    }
   }else{
-    res.statusCode = 500;
+    res.statusCode = 200;
     res.json({
-      error: 'Error: no picture'
+      error: 'Error: missing data'
     });
   }
+  
 
 });
 

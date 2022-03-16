@@ -1,3 +1,4 @@
+const { reject } = require('bcrypt/promises');
 const {
   Connection
 } = require('./connection.js');
@@ -12,6 +13,14 @@ class ConnectionDB {
   getVerbinding() {
     let databaseFactory = new DatabaseFactory();
     return databaseFactory.getDatabase();
+  }
+
+  getConnectionByID(id){
+    return new Promise((resolve, reject) => {
+      this.getVerbinding().voerSqlQueryUit("SELECT * FROM connection WHERE id = ?", [id]).then((connection) => {
+        resolve(this.converteerQueryNaarObject(connection));
+      }).catch((error) => reject(error));
+    });
   }
 
   /**

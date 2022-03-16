@@ -3,8 +3,6 @@ const { UserDB } = require('../CRUD/userDB.js');
 
 let userDB = new UserDB;
 
-const automaticLogin = true;
-
 class UserController {
   
   static register(email, password, name, picture, age, job, association, bio) {

@@ -1,7 +1,4 @@
 .chat-container{
-
-  max-height: 60vh;
-  overflow-y: scroll;
   
   .chat{
     padding: 5px 10px;
@@ -21,10 +18,8 @@
 }
 
 .chat-textbox-container{
-  position: fixed;
-  bottom: 30px;
-  left: 15px;
-  right: 15px;
+
+  width: 100%;
 
   textarea, button{
     padding: 10px;

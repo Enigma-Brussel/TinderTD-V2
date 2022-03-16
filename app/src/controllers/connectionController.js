@@ -1,3 +1,4 @@
+const { reject } = require('bcrypt/promises');
 const { ConnectionDB } = require('../CRUD/connectionDB.js');
 const UserController = require('./userController.js');
 
@@ -280,6 +281,14 @@ class connectionController {
 
     });
 
+  }
+
+  static getConnection(id){
+    return new Promise((resolve, reject) => {
+      connectionDB.getConnectionByID(id).then((connection) => {
+        resolve(connection);
+      }).catch((error) => reject(error));
+    });
   }
 
 }
