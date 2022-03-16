@@ -31,19 +31,21 @@
 
       <div class="content">
 
-        <h1>Miguel Billiet</h1>
+        <!-- <h1>Miguel Billiet</h1> -->
 
         <div class="chat-container">
 
           <!-- Chats -->
 
-          <div class="row">
+          <!-- <div class="row">
             <span class="chat chat-gray">Inkomend bericht 1</span>
           </div>
 
           <div class="row justify-right">
             <span class="chat chat-color">Uitgaand bericht 2</span>
-          </div>
+          </div> -->
+
+          <p style="text-align: center; padding: 20px 0px">Helaas is dit net niet afgeraakt...<br/>Maar waarom chatten als we elkaar in het echt kunnen spreken?</p>
 
           <!-- End chats -->
 
@@ -53,20 +55,25 @@
 
       <!-- textbox -->
 
-      <div class="bottom-bar row">
+      <!-- <div class="bottom-bar row">
         <form class="chat-textbox-container">
           <div class="row space-between" style="flex: 4">
             <textarea name="chat-textbox" id="chat-textbox" rows="1" placeholder="Schrijf een bericht" style="flex-grow: 3;"></textarea>
             <button style="flex-grow: 1;">Send</button>
           </div>
         </form>
-      </div>
+      </div> -->
 
     </div>
   </div>
 
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script> -->
-  <script src="script/sendbird/SendBird.min.ts"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
+    integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="script/main.js"></script>
   <script src="script/chat.js"></script>
 

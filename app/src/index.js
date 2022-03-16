@@ -2,7 +2,9 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const bodyParser = require('body-parser');
+const socketio = require('socket.io');
 const http = require('http');
+const SocketManager = require('./socketManager');
 
 
 require('dotenv').config();
@@ -10,16 +12,10 @@ require('dotenv').config();
 // declarations
 const app = express();
 const port = process.env.PORT;
-
-// sockerIO
 const server = http.createServer(app);
-const io = require('socket.io')(server);
-const socketManager = require('./socketManager.js');
-const socket = new socketManager(io);
+const io = socketio(server);
 
-// io.attach(server, {
-//   pingTimeout: 30000, // ping bug fix
-// });
+global.socketManager = new SocketManager(io);
 
 function isloggedin(req){
   req.session.user && req.session.isloggedin == true ? true : false;
@@ -34,7 +30,7 @@ app.use(express.static(`${__dirname}/public`));
 // cors
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", req.headers.origin);
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Methods", "%");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.header("Access-Control-Allow-Credentials", "true");
   next();
@@ -55,6 +51,8 @@ const auth = require('./middleware/auth');
 
 
 // chat
+
+
 
 const {chat, chatApi} = require('./routes/chat.js');
 
@@ -86,6 +84,10 @@ app.get('/matches', auth, (req, res) => {
   res.sendFile(path.join(`${__dirname}/views/matches.html`));
 });
 
+app.get('/check', auth, (req, res) => {
+  res.sendFile(path.join(`${__dirname}/views/check.html`));
+});
+
 app.use('/chat', auth, chat);
 
 // API
@@ -96,11 +98,14 @@ app.use('/api/user', userRoute);
 const connectionRoute = require('./routes/connection.js');
 app.use('/api/connection', connectionRoute);
 
+const tokenRoute = require('./routes/token.js');
+app.use('/api/token', tokenRoute);
+
 app.use('/api/chat', chatApi);
 
 
 // server
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Tinder server started at port ${port}`);
 });

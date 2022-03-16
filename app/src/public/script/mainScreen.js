@@ -22,7 +22,11 @@ async function getUserData(){
   const response = await sendData('/api/user/userdata', 'GET', null);
   if(response){
     loggedInUser = response;
-    if(response.superlikes == 0){
+
+   
+
+    if(response.superlikes < 1){
+      console.log('USER', response);
       $('#superlike').classList.add('blocked');
     }
   }else{
@@ -49,8 +53,6 @@ function render(){
         <span class="detail">${(potentionalMatches[currentUser].association)}</span>
         <span class="bio">${potentionalMatches[currentUser].bio}</span>
       </div>
-
-      <hr/>
     `;
 
   }else{
@@ -92,7 +94,7 @@ $('#superlike').addEventListener('click', async (e) => {
       getUserData();
       if(response.complete){
         connectionID = response.id;
-        renderMatchScreen(response.type, response.user);
+        renderMatchScreen(response.type, response.user, response.token);
       }
       currentUser ++;
       render();
@@ -124,14 +126,14 @@ $('#like').addEventListener('click', async (e) => {
 
 
 
-function renderMatchScreen(type, user){
+function renderMatchScreen(type, user, token = null){
 
   switch(type){
     case 'like':
 
       $('#like-pf-user-two').style.backgroundImage = `url(/img/users/${user.picture})`;
       $('#like-pf-user-one').style.backgroundImage = `url(/img/users/${loggedInUser.picture})`;
-      $('#like-send-message').innerHTML = `Stuur ${user.name} een bericht`;
+      // $('#like-send-message').innerHTML = `Stuur ${user.name} een bericht`;
       $('#like-text').innerHTML = `Jij en ${user.name} hebben een match!`;
 
       $('#match-like').style.display = 'block';
@@ -141,7 +143,8 @@ function renderMatchScreen(type, user){
 
       $('#super-pf-user-two').style.backgroundImage = `url(/img/users/${user.picture})`;
       $('#super-pf-user-one').style.backgroundImage = `url(/img/users/${loggedInUser.picture})`;
-      $('#super-send-message').innerHTML = `Stuur ${user.name} een bericht`;
+      // $('#super-send-message').innerHTML = `Stuur ${user.name} een bericht`;
+      $('#code').innerHTML = token;
       $('#super-text').innerHTML = `Jij en ${user.name} hebben een super match!`;
 
       $('#match-superlike').style.display = 'block';
@@ -150,13 +153,13 @@ function renderMatchScreen(type, user){
   }
 }
 
-$('#like-send-message').addEventListener('click', () => {
-  window.location.href = `/chat?connection=${connectionID}`;
-});
+// $('#like-send-message').addEventListener('click', () => {
+//   window.location.href = `/chat?connection=${connectionID}`;
+// });
 
-$('#super-send-message').addEventListener('click', () => {
-  window.location.href = `/chat?connection=${connectionID}`;
-});
+// $('#super-send-message').addEventListener('click', () => {
+//   window.location.href = `/chat?connection=${connectionID}`;
+// });
 
 $('#like-cancel').addEventListener('click', () => {
   $('#match-like').style.display = 'none';
@@ -166,10 +169,17 @@ $('#super-cancel').addEventListener('click', () => {
   $('#match-superlike').style.display = 'none';
 });
 
-$('#free-shot').addEventListener('click', () => {
+// $('#free-shot').addEventListener('click', () => {
 
-});
+// });
 
 
 getPotentionalMatches();
 getUserData();
+
+// loggedInUser = {picture: ''};
+
+// renderMatchScreen('superlike', {
+//   name: "Laura",
+//   picture: "1647210775277E2321F63-488C-4C10-BCE4-C08BC22465EF.jpeg"
+// });

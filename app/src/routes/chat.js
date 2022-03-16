@@ -4,6 +4,7 @@ const apiRouter = require('express').Router();
 const ConnectionController = require('../controllers/connectionController');
 
 const path = require('path');
+const SocketManager = require('../socketManager');
 
 
 router.get('/', (req,res) => {
@@ -27,6 +28,17 @@ router.get('/', (req,res) => {
 
 
 // api
+
+apiRouter.post('/sync', (req, res) => {
+  console.log('GET', '/api/chat/sync', req.body);
+
+  if(req.session.user){
+    global.socketManager.addClient(req.body.socketID, req.session.user);
+    req.session.socketID = req.body.socketID;
+    let connectionID = req.session.connectionID;
+    // global.socketManager.contributeChatroom(connectionID, req.session.socketID);
+  }
+});
 
 apiRouter.post('/messages', (req, res) => {
   console.log('GET', '/api/chat/messages', req.body);

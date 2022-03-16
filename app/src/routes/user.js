@@ -147,9 +147,20 @@ router.post('/checkmail', (req, res) => {
 
 router.get('/userdata', (req, res) => {
   console.log('GET', '/api/user/userdata', req.body);
+
   if(req.session.user){
-    res.status = 200;
-    res.json(req.session.user);
+    UserController.getUser(req.session.user.id).then((user) => {
+      if(user){
+        res.status = 200;
+        res.json(user);
+      }else{
+        res.status = 500;
+        res.json({error: 'no user'});
+      }
+    }).catch((error) => {
+      res.status = 500;
+      res.json({error: error});
+    });
   }else{
     res.status = 401;
     res.json({error: 'No session, please login again'});

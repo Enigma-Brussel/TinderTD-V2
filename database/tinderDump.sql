@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: tinder
--- Generation Time: 2022-03-13 03:55:10.8510
+-- Generation Time: 2022-03-16 22:38:10.6750
 -- -------------------------------------------------------------
 
 
@@ -43,7 +43,16 @@ CREATE TABLE `connection` (
   KEY `user_2` (`user_two`),
   CONSTRAINT `connection_ibfk_1` FOREIGN KEY (`user_one`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `connection_ibfk_2` FOREIGN KEY (`user_two`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE `token` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `token` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -60,7 +69,7 @@ CREATE TABLE `user` (
   `bio` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 
 

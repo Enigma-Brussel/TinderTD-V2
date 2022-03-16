@@ -1,8 +1,9 @@
-const { reject } = require('bcrypt/promises');
 const { ConnectionDB } = require('../CRUD/connectionDB.js');
 const UserController = require('./userController.js');
+const { TokenDB } = require('../CRUD/tokenDB.js')
 
 let connectionDB = new ConnectionDB;
+let tokenDB = new TokenDB;
 
 class connectionController {
 
@@ -62,7 +63,13 @@ class connectionController {
                         // MATCH (superlike)
                         connectionDB.editConnection(connection.id, 'superlike', true).then((value) => {
                           UserController.getUser(userTwo).then((user) => {
-                            resolve({id: connection.id, status: 'match', type: 'superlike', complete: true, user: {name: user.name, picture: user.picture}});
+
+                            // genereer token
+                            tokenDB.createToken(`${connection.id}${userOne}${userTwo}`).then((token) => {
+                              console.log('TOKEN', token);
+                              resolve({id: connection.id, status: 'match', type: 'superlike', complete: true, token: token, user: {name: user.name, picture: user.picture}});
+                            }).catch((error) => reject(error));
+                            
                           }).catch((error) => reject(error));
                         }).catch((error) => reject(error));
                         // bonus?

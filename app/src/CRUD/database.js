@@ -41,7 +41,7 @@ class Database {
     voerAdvancedSqlQueryUit(mijnSqlQuery, verbindingAutomatischVerbreken = true, parameterArray = null) {
         return new Promise(async (resolve, reject) => {
             this.maakVerbindingMetDatabase();
-            // console.log('DB', mijnSqlQuery, parameterArray);
+            console.log('DB', mijnSqlQuery, parameterArray);
             await this.mijnVerbinding.query(mijnSqlQuery, parameterArray, function (error, results, fields) {
                 if (error) reject(error);
                 if (results) {
