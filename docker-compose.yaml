@@ -28,6 +28,7 @@ services:
     restart: always
     volumes:
       - ./database/data:/var/lib/mysql
+      - ./database_settings/:/etc/mysql
     environment:
       MYSQL_ROOT_HOST: 127.0.0.1
       MYSQL_ROOT_PASSWORD: $ROOTPASSWORD
