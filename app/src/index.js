@@ -4,15 +4,18 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const http = require('http');
 
+
 require('dotenv').config();
 
 // declarations
 const app = express();
 const port = process.env.PORT;
 
+// sockerIO
 const server = http.createServer(app);
-const io = require('socket.io')(server, {log: true});
-
+const io = require('socket.io')(server);
+const socketManager = require('./socketManager.js');
+const socket = new socketManager(io);
 
 // io.attach(server, {
 //   pingTimeout: 30000, // ping bug fix
@@ -100,11 +103,4 @@ app.use('/api/chat', chatApi);
 
 app.listen(port, () => {
   console.log(`Tinder server started at port ${port}`);
-});
-
-
-// sockerIO
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
 });

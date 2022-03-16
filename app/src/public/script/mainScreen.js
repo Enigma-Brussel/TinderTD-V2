@@ -49,6 +49,8 @@ function render(){
         <span class="detail">${(potentionalMatches[currentUser].association)}</span>
         <span class="bio">${potentionalMatches[currentUser].bio}</span>
       </div>
+
+      <hr/>
     `;
 
   }else{
@@ -130,6 +132,7 @@ function renderMatchScreen(type, user){
       $('#like-pf-user-two').style.backgroundImage = `url(/img/users/${user.picture})`;
       $('#like-pf-user-one').style.backgroundImage = `url(/img/users/${loggedInUser.picture})`;
       $('#like-send-message').innerHTML = `Stuur ${user.name} een bericht`;
+      $('#like-text').innerHTML = `Jij en ${user.name} hebben een match!`;
 
       $('#match-like').style.display = 'block';
 
@@ -139,6 +142,7 @@ function renderMatchScreen(type, user){
       $('#super-pf-user-two').style.backgroundImage = `url(/img/users/${user.picture})`;
       $('#super-pf-user-one').style.backgroundImage = `url(/img/users/${loggedInUser.picture})`;
       $('#super-send-message').innerHTML = `Stuur ${user.name} een bericht`;
+      $('#super-text').innerHTML = `Jij en ${user.name} hebben een super match!`;
 
       $('#match-superlike').style.display = 'block';
 

@@ -90,16 +90,21 @@ a {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
 .bottom-bar {
   width: 100%;
   height: auto;
-  position: absolute;
   bottom: 0px;
   left: 0px;
+}
+
+* {
+  box-shadow: 0px 0px 0px 1px lime inset;
+  -webkit-box-shadow: 0px 0px 0px 1px lime inset;
+  -moz-box-shadow: 0px 0px 0px 1px lime inset;
 }
 
 .row {

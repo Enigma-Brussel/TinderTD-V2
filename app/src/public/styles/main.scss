@@ -1,4 +1,4 @@
-$DEV : false;
+$DEV : true;
 
 html, body{
   -webkit-font-smoothing: antialiased;
@@ -74,7 +74,6 @@ a{
   right: 15px;
   position: absolute;
 
-
   display: flex;
   flex-flow: column;
 
@@ -90,14 +89,14 @@ a{
 
 .content{
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
 .bottom-bar{
   width: 100%;
   height: auto;
-  position: absolute;
+  // position: absolute;
   bottom: 0px;
   left: 0px;
 }
