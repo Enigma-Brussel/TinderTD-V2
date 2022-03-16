@@ -15,7 +15,7 @@ class UserController {
         if(user){
           reject('Email al in gebruik');
         }else{
-          userDB.createUser(email, password, name, picture, 0, 0, age, job, association, bio).then(value => {
+          userDB.createUser(email, password, name, picture, 0, 1, age, job, association, bio).then(value => {
             resolve(value);
           }).catch(value => {
             console.log('UserController', value);

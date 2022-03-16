@@ -138,30 +138,39 @@ router.post('/checkmail', (req, res) => {
 
 router.get('/userdata', (req, res) => {
   console.log('GET', '/api/user/userdata', req.body);
-  res.status = 200;
-  res.json(req.session.user);
+  if(req.session.user){
+    res.status = 200;
+    res.json(req.session.user);
+  }else{
+    res.status = 401;
+    res.json({error: 'No session, please login again'});
+  }
 });
 
 router.post('/change', (req, res) => {
   console.log('POST', '/api/user/change', req.body)
-
-  if(req.body.name && req.body.age && req.body.job && req.body.association && req.body.bio){
-    UserController.editProfile(req.session.user.id, {
-      name: req.body.name,
-      age: req.body.age,
-      job: req.body.job,
-      association: req.body.association,
-      bio: req.body.bio,
-    }).then((value) => {
-      res.status = 200;
-      res.json(value);
-    }).catch((error) => {
+  if(req.session.user){
+    if(req.body.name && req.body.age && req.body.job && req.body.association && req.body.bio){
+      UserController.editProfile(req.session.user.id, {
+        name: req.body.name,
+        age: req.body.age,
+        job: req.body.job,
+        association: req.body.association,
+        bio: req.body.bio,
+      }).then((value) => {
+        res.status = 200;
+        res.json(value);
+      }).catch((error) => {
+        res.status = 500;
+        res.json({error: error});
+      });
+    }else{
       res.status = 500;
-      res.json({error: error});
-    });
+      res.json({error: 'Missing data'});
+    }
   }else{
-    res.status = 500;
-    res.json({error: 'Missing data'});
+    res.status = 401;
+    res.json({error: 'No session, please login again'});
   }
 
 });

@@ -71,4 +71,38 @@
   height: 35px;
   width: auto;
 }
+
+.full-screen {
+  display: none;
+}
+
+.full-screen#match-like {
+  background-repeat: no-repeat;
+  background: linear-gradient(262deg, #ff7854, #fd267d);
+}
+
+.full-screen#match-superlike {
+  background-repeat: no-repeat;
+  background: linear-gradient(45deg, #9cecfb, #65c7f7, #0052d4);
+}
+
+.full-screen .match-logo {
+  width: 80%;
+  height: auto;
+}
+
+.full-screen .profile-picture {
+  width: 35%;
+  border-radius: 50%;
+  background-size: cover;
+  border: 5px solid white;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.full-screen .profile-picture:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
 /*# sourceMappingURL=mainScreen.css.map */

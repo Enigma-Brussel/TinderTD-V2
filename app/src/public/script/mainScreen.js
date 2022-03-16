@@ -1,5 +1,7 @@
 let potentionalMatches = [];
 let currentUser = 0;
+let connectionID = 0;
+let loggedInUser = null;
 
 async function getPotentionalMatches(){
   const response = await sendData('/api/connection/potentional', 'GET', null);
@@ -10,6 +12,18 @@ async function getPotentionalMatches(){
       potentionalMatches = response;
       console.log(potentionalMatches);
       render();
+    }
+  }else{
+    console.log('Unknown error');
+  }
+}
+
+async function getUserData(){
+  const response = await sendData('/api/user/userdata', 'GET', null);
+  if(response){
+    loggedInUser = response;
+    if(response.superlikes == 0){
+      $('#superlike').classList.add('blocked');
     }
   }else{
     console.log('Unknown error');
@@ -48,9 +62,8 @@ function render(){
 }
 
 
-$('#dislike').addEventListener('click', async (e) => {
-  console.log('dislike');
 
+$('#dislike').addEventListener('click', async (e) => {
   const response = await sendData('/api/connection/match', 'POST', {targetUser: potentionalMatches[currentUser].id, connectionType: 'dislike'});
   console.log('response', response);
 
@@ -58,76 +71,101 @@ $('#dislike').addEventListener('click', async (e) => {
     if(response.error){
       console.log('error', response.error);
     }else{
-
-      // 
-
       currentUser ++;
       render();
     }
   }else{
     console.log('Unknown error');
   }
-
-  
 });
 
 $('#superlike').addEventListener('click', async (e) => {
   console.log('superlike');
-
   const response = await sendData('/api/connection/match', 'POST', {targetUser: potentionalMatches[currentUser].id, connectionType: 'superlike'});
   console.log('response', response);
-
   if(response){
     if(response.error){
       console.log('error', response.error);
     }else{
+      getUserData();
       if(response.complete){
-        switch(response.type){
-          case 'like':
-            // match like
-    
-            break;
-          case 'superlike':
-            // match superlike
-    
-            break;
-        }
+        connectionID = response.id;
+        renderMatchScreen(response.type, response.user);
       }
-    
       currentUser ++;
       render();
     }
   }else{
     console.log('Unknown error');
   }
-
-  
 });
 
 $('#like').addEventListener('click', async (e) => {
   console.log('like');
-
   const response = await sendData('/api/connection/match', 'POST', {targetUser: potentionalMatches[currentUser].id, connectionType: 'like'});
   console.log('response', response);
-
   if(response){
     if(response.error){
       console.log('error', response.error);
     }else{
       if(response.complete){
-        // match like
+        connectionID = response.id;
+        renderMatchScreen(response.type, response.user);
       }
-    
       currentUser ++;
       render();
     }
   }else{
     console.log('Unknown error');
   }
-
-  
 });
 
 
 
+function renderMatchScreen(type, user){
+
+  switch(type){
+    case 'like':
+
+      $('#like-pf-user-two').style.backgroundImage = `url(/img/users/${user.picture})`;
+      $('#like-pf-user-one').style.backgroundImage = `url(/img/users/${loggedInUser.picture})`;
+      $('#like-send-message').innerHTML = `Stuur ${user.name} een bericht`;
+
+      $('#match-like').style.display = 'block';
+
+      break;
+    case 'superlike':
+
+      $('#super-pf-user-two').style.backgroundImage = `url(/img/users/${user.picture})`;
+      $('#super-pf-user-one').style.backgroundImage = `url(/img/users/${loggedInUser.picture})`;
+      $('#super-send-message').innerHTML = `Stuur ${user.name} een bericht`;
+
+      $('#match-superlike').style.display = 'block';
+
+      break;
+  }
+}
+
+$('#like-send-message').addEventListener('click', () => {
+  window.location.href = `/chat?connection=${connectionID}`;
+});
+
+$('#super-send-message').addEventListener('click', () => {
+  window.location.href = `/chat?connection=${connectionID}`;
+});
+
+$('#like-cancel').addEventListener('click', () => {
+  $('#match-like').style.display = 'none';
+});
+
+$('#super-cancel').addEventListener('click', () => {
+  $('#match-superlike').style.display = 'none';
+});
+
+$('#free-shot').addEventListener('click', () => {
+
+});
+
+
 getPotentionalMatches();
+getUserData();

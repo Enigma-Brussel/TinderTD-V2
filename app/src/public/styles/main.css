@@ -33,6 +33,14 @@ a {
   text-decoration: none;
 }
 
+.full-screen {
+  position: fixed;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+}
+
 @media only screen and (max-width: 600px) {
   .container {
     width: 100%;
@@ -136,6 +144,10 @@ a {
   width: -moz-min-content;
   width: -webkit-min-content;
   width: min-content;
+}
+
+.button.full-width {
+  width: auto !important;
 }
 
 .button:hover {

@@ -1,6 +1,4 @@
-const { promise, reject } = require('bcrypt/promises');
 const { ConnectionDB } = require('../CRUD/connectionDB.js');
-const { User } = require('../CRUD/user.js');
 const UserController = require('./userController.js');
 
 let connectionDB = new ConnectionDB;
@@ -36,7 +34,9 @@ class connectionController {
                     if(connection.matchType == 'like' || connection.matchType == 'superlike'){
                       // MATCH (like)
                       connectionDB.editConnection(connection.id, 'like', true).then((value) => {
-                        resolve({status: 'match', type: 'like', complete: true});
+                        UserController.getUser(userTwo).then((user) => {
+                          resolve({id: connection.id, status: 'match', type: 'like', complete: true, user: {name: user.name, picture: user.picture}});
+                        }).catch((error) => reject(error));
                       }).catch((error) => reject(error));
                     }else{
                       // dislike match
@@ -60,13 +60,17 @@ class connectionController {
                       if(connection.matchType == 'superlike'){
                         // MATCH (superlike)
                         connectionDB.editConnection(connection.id, 'superlike', true).then((value) => {
-                          resolve({status: 'match', type: 'superlike', complete: true});
+                          UserController.getUser(userTwo).then((user) => {
+                            resolve({id: connection.id, status: 'match', type: 'superlike', complete: true, user: {name: user.name, picture: user.picture}});
+                          }).catch((error) => reject(error));
                         }).catch((error) => reject(error));
                         // bonus?
                       }else if(connection.matchType == 'like'){
                         // MATCH (like)
                         connectionDB.editConnection(connection.id, 'like', true).then((value) => {
-                          resolve({status: 'match', type: 'like', complete: true});
+                          UserController.getUser(userTwo).then((user) => {
+                            resolve({id: connection.id, status: 'match', type: 'like', complete: true, user: {name: user.name, picture: user.picture}});
+                          }).catch((error) => reject(error));
                         }).catch((error) => reject(error));
                       }else{
                         // dislike match
