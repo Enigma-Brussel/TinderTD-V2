@@ -1,17 +1,18 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+    @vite(['resources/css/dashboard.css'])
+    
+    <div class="content row">
+        @livewire('swipe-cards')     
     </div>
+
+    <!-- Bottom -->
+    <div class="bottom-bar row space-evenly" id="bottom-bar">
+
+        <span class="main-button shadow" id="dislike"><img src="{{ asset('icons/x.svg') }}" alt=""></span>
+        <span class="main-button shadow" id="superlike"><img src="{{ asset('icons/star.svg') }}" alt=""></span>
+        <span class="main-button shadow" id="like"><img src="{{ asset('icons/heart.svg') }}" alt=""></span>
+
+    </div>
+
 </x-app-layout>
