@@ -18,9 +18,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
+        'name',
+        'picture',
+        'superlikes',
         'password',
+        'age',
+        'job',
+        'association',
+        'bio'
     ];
 
     /**
@@ -41,4 +47,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function connections(){
+        return $this->belongsToMany('App\Models\Connection');
+    }
 }

@@ -1,0 +1,144 @@
+.card{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0px;
+  
+    .picture-container{
+      width: 100%;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+  
+      img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+  
+      &:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      }
+    }
+  
+    .card-details{
+      padding: 10px 0px;
+      margin-bottom: 50px;
+  
+      h2{
+        margin: 0px 0px 5px;
+        font-size: 28px;
+      }
+  
+      .detail{
+        display: block;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.75);
+      }
+  
+      .bio{
+        margin: 15px 0px 0px;
+        display: block;
+        font-size: 14px;
+        line-height: 1.4;
+        color: rgba(0, 0, 0, 0.75);
+      }
+    }
+  
+  }
+  
+  .main-button{
+    border-radius: 50%!important;
+    height: 70px;
+    width: 70px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    img{
+      height: 35px;
+      width: auto;
+    }
+  }
+  
+  
+  .full-screen{
+    display: none;
+  
+    &#match-like{
+      background-repeat: no-repeat;
+      background: linear-gradient(262deg, #ff7854, #fd267d);
+    }
+    
+    &#match-superlike{
+      background-repeat: no-repeat;
+      background: linear-gradient(45deg, #9cecfb, #65c7f7, #0052d4);
+    }
+    
+    .match-logo{
+      width: 80%;
+      height: auto;
+    }
+    
+    .profile-picture{
+      width: 35%;
+      border-radius: 50%;
+      background-size: cover;
+      border: 5px solid white;
+      background-position: center;
+      background-repeat: no-repeat;
+  
+      &:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      }
+    }
+  
+    .code{
+      text-decoration: none;
+      color: white;
+      padding: 5px 10px;
+      background: #12c2e9;
+      background: linear-gradient(45deg, #9cecfb, #65c7f7, #0052d4);
+      background-size: 400%;
+      animation: animate 10s linear infinite;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 24px;
+      border: 4px solid #0052d4;
+  
+      margin-top: 10px;
+      margin-bottom: 10px;
+      
+      width: -moz-min-content;
+      width: -webkit-min-content;
+      width: min-content;
+    }
+  
+  }
+  
+  
+  @keyframes animate{
+    0%{
+      background-position: left top;
+    }
+    25%{
+      background-position: right top;
+    }
+    50%{
+      background-position: right bottom;
+    }
+    75%{
+      background-position: left bottom;
+    }
+    100%{
+      background-position: left top;
+    }
+  }
