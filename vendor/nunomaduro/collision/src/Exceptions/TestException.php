@@ -139,7 +139,10 @@ final class TestException
             if (trim($trace) === '') {
                 return null;
             }
-            [$file, $line] = explode(':', $trace);
+
+            $parts = explode(':', $trace);
+            $line = array_pop($parts);
+            $file = implode(':', $parts);
 
             return [
                 'file' => $file,

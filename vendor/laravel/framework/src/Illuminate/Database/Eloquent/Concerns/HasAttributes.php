@@ -1378,7 +1378,7 @@ trait HasAttributes
         // that is returned back out to the developers after we convert it here.
         try {
             $date = Date::createFromFormat($format, $value);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             $date = false;
         }
 
@@ -1592,9 +1592,7 @@ trait HasAttributes
             return false;
         }
 
-        if (function_exists('enum_exists') && enum_exists($castType)) {
-            return true;
-        }
+        return enum_exists($castType);
     }
 
     /**

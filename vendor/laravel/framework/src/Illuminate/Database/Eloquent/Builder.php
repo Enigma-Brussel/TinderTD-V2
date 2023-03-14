@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Closure;
 use Exception;
 use Illuminate\Contracts\Database\Eloquent\Builder as BuilderContract;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Concerns\BuildsQueries;
 use Illuminate\Database\Eloquent\Concerns\QueriesRelationships;
@@ -633,7 +634,7 @@ class Builder implements BuilderContract
     {
         try {
             return $this->baseSole($columns);
-        } catch (RecordsNotFoundException $exception) {
+        } catch (RecordsNotFoundException) {
             throw (new ModelNotFoundException)->setModel(get_class($this->model));
         }
     }
@@ -647,6 +648,8 @@ class Builder implements BuilderContract
     public function value($column)
     {
         if ($result = $this->first([$column])) {
+            $column = $column instanceof Expression ? $column->getValue($this->getGrammar()) : $column;
+
             return $result->{Str::afterLast($column, '.')};
         }
     }
@@ -662,6 +665,8 @@ class Builder implements BuilderContract
      */
     public function soleValue($column)
     {
+        $column = $column instanceof Expression ? $column->getValue($this->getGrammar()) : $column;
+
         return $this->sole([$column])->{Str::afterLast($column, '.')};
     }
 
@@ -675,6 +680,8 @@ class Builder implements BuilderContract
      */
     public function valueOrFail($column)
     {
+        $column = $column instanceof Expression ? $column->getValue($this->getGrammar()) : $column;
+
         return $this->firstOrFail([$column])->{Str::afterLast($column, '.')};
     }
 
@@ -773,7 +780,7 @@ class Builder implements BuilderContract
         $relation = Relation::noConstraints(function () use ($name) {
             try {
                 return $this->getModel()->newInstance()->$name();
-            } catch (BadMethodCallException $e) {
+            } catch (BadMethodCallException) {
                 throw RelationNotFoundException::make($this->getModel(), $name);
             }
         });
@@ -858,6 +865,8 @@ class Builder implements BuilderContract
     public function pluck($column, $key = null)
     {
         $results = $this->toBase()->pluck($column, $key);
+
+        $column = $column instanceof Expression ? $column->getValue($this->getGrammar()) : $column;
 
         // If the model has a mutator for the requested column, we will spin through
         // the results and mutate the values so that the mutated version of these
@@ -1034,7 +1043,7 @@ class Builder implements BuilderContract
         }
 
         return $this->toBase()->upsert(
-            $this->addTimestampsToUpsertValues($values),
+            $this->addTimestampsToUpsertValues($this->addUniqueIdsToUpsertValues($values)),
             $uniqueBy,
             $this->addUpdatedAtToUpsertColumns($update)
         );
@@ -1120,6 +1129,29 @@ class Builder implements BuilderContract
         $values[$qualifiedColumn] = Arr::get($values, $qualifiedColumn, $values[$column]);
 
         unset($values[$column]);
+
+        return $values;
+    }
+
+    /**
+     * Add unique IDs to the inserted values.
+     *
+     * @param  array  $values
+     * @return array
+     */
+    protected function addUniqueIdsToUpsertValues(array $values)
+    {
+        if (! $this->model->usesUniqueIds()) {
+            return $values;
+        }
+
+        foreach ($this->model->uniqueIds() as $uniqueIdAttribute) {
+            foreach ($values as &$row) {
+                if (! array_key_exists($uniqueIdAttribute, $row)) {
+                    $row = array_merge([$uniqueIdAttribute => $this->model->newUniqueId()], $row);
+                }
+            }
+        }
 
         return $values;
     }
@@ -1751,6 +1783,8 @@ class Builder implements BuilderContract
      */
     public function qualifyColumn($column)
     {
+        $column = $column instanceof Expression ? $column->getValue($this->getGrammar()) : $column;
+
         return $this->model->qualifyColumn($column);
     }
 

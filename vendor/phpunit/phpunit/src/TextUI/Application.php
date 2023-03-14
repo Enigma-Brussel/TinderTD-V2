@@ -63,6 +63,7 @@ use PHPUnit\TextUI\Output\Printer;
 use PHPUnit\TextUI\XmlConfiguration\Configuration as XmlConfiguration;
 use PHPUnit\TextUI\XmlConfiguration\DefaultConfiguration;
 use PHPUnit\TextUI\XmlConfiguration\Loader;
+use SebastianBergmann\Timer\Timer;
 use Throwable;
 
 /**
@@ -132,6 +133,9 @@ final class Application
 
             EventFacade::seal();
 
+            $timer = new Timer;
+            $timer->start();
+
             $runner = new TestRunner;
 
             $runner->run(
@@ -139,6 +143,8 @@ final class Application
                 $resultCache,
                 $testSuite
             );
+
+            $duration = $timer->stop();
 
             $testDoxResult = null;
 
@@ -162,7 +168,7 @@ final class Application
 
             $result = TestResultFacade::result();
 
-            OutputFacade::printResult($result, $testDoxResult);
+            OutputFacade::printResult($result, $testDoxResult, $duration);
             CodeCoverage::instance()->generateReports($printer, $configuration);
 
             $shellExitCode = (new ShellExitCodeCalculator)->calculate(
@@ -191,20 +197,31 @@ final class Application
         }
 
         printf(
-            '%s%sAn error occurred inside PHPUnit.%s%sMessage:  %s%sLocation: %s:%d%s%s%s%s',
+            '%s%sAn error occurred inside PHPUnit.%s%sMessage:  %s',
             PHP_EOL,
             PHP_EOL,
             PHP_EOL,
             PHP_EOL,
-            $message,
-            PHP_EOL,
-            $t->getFile(),
-            $t->getLine(),
-            PHP_EOL,
-            PHP_EOL,
-            $t->getTraceAsString(),
-            PHP_EOL
+            $message
         );
+
+        $first = true;
+
+        do {
+            printf(
+                '%s%s: %s:%d%s%s%s%s',
+                PHP_EOL,
+                $first ? 'Location' : 'Caused by',
+                $t->getFile(),
+                $t->getLine(),
+                PHP_EOL,
+                PHP_EOL,
+                $t->getTraceAsString(),
+                PHP_EOL
+            );
+
+            $first = false;
+        } while ($t = $t->getPrevious());
 
         exit(Result::CRASH);
     }
@@ -377,7 +394,7 @@ final class Application
 
     private function executeHelpCommandWhenThereIsNothingElseToDo(Configuration $configuration, TestSuite $testSuite): void
     {
-        if ($testSuite->isEmpty() && !$configuration->hasCliArgument() && !$configuration->hasDefaultTestSuite()) {
+        if ($testSuite->isEmpty() && !$configuration->hasCliArgument() && $configuration->testSuite()->isEmpty()) {
             $this->execute(new ShowHelpCommand(Result::FAILURE));
         }
     }
