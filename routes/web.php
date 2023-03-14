@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,54 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-// startpagina
 Route::get('/', function () {
-
+    return view('welcome');
 });
-
-// login
-// registreer
-// -> ./auth.php
-
-
-// -- AUTH
-
-// hoofdscherm
-Route::get('/main', function () {
-
-})->middleware('auth')->name('main');
-
-// instellingen
-Route::get('/settings', [ProfileController::class, 'edit'])->middleware('auth')->name('settings');
-
-
-Route::prefix('/match')->middleware('auth')->group(function () {
-    // matchlijst (/match)
-    Route::get('/', function () {
-        return view('dashboard');
-    })->middleware('auth')->name('match');
-
-    // match (nieuw)
-    Route::get('/{userId}', function () {
-    
-    })->middleware('auth')->name('match.user');
-});
-
-// chat (nieuw - optioneel)
-
-
-require __DIR__.'/auth.php';
